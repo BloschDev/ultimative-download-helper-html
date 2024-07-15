@@ -51,17 +51,15 @@ body, html {
 <button class="tablink" onclick="openPage('Contact', this, 'red')">Contact</button>
 
 <div id="Home" class="tabcontent">
-  <h3>Main Downloader</h3>
-  <p>Gallery-DL </p>
-  <h1>Ultimative Download Helper</h1>
+ <h1>Gallery DL Downloader</h1>
     <form onsubmit="event.preventDefault(); startDownload();">
-        <label for="url">Enter a URL:</label>
+        <label for="url">URL eingeben:</label>
         <input type="text" id="url" name="url" required>
         <button type="submit">Download</button>
     </form>
     <button onclick="stopDownload()">Stop</button>
     <button onclick="updateRepo()">Update</button>
-    <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
+    <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe>
 </div>
 
 
