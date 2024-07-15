@@ -11,6 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
+    // Berechtigungen setzen
+    exec('sudo chown -R www-data:www-data /var/www/html/ && sudo chmod -R 755 /var/www/html/', $output, $return_var);
+    if ($return_var !== 0) {
+        echo "Fehler beim Setzen der Berechtigungen für /var/www/html:<br>" . implode("<br>", $output);
+        exit;
+    }
+
     // Dateien kopieren
     $output = [];
     exec('cp -r /tmp/repo/* /var/www/html/ 2>&1', $output, $return_var);
