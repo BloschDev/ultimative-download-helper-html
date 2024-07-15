@@ -66,8 +66,46 @@
         }
     </script>
 </head>
+<body>	
+	<style>
+body {font-family: "Lato", sans-serif;}
+
+.tablink {
+  background-color: #555;
+  color: white;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width: 25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+/* Style the tab content */
+.tabcontent {
+  color: white;
+  display: none;
+  padding: 50px;
+  text-align: center;
+}
+
+#London {background-color:red;}
+#Paris {background-color:green;}
+#Tokyo {background-color:blue;}
+#Oslo {background-color:orange;}
+</style>
+</head>
 <body>
-    <h1>Ultimative Download Helper</h1>
+<center>Rev. 0.0.3a</center>
+<div id="downloader" class="tabcontent">
+  <h1>Downloader for Any</h1>
+  <p>Gallery-DL </p>
+  <h1>Ultimative Download Helper</h1>
     <form onsubmit="event.preventDefault(); startDownload();">
         <label for="url">Enter a URL:</label>
         <input type="text" id="url" name="url" required>
@@ -76,6 +114,43 @@
     <button onclick="stopDownload()">Stop</button>
     <button onclick="updateRepo()">Update</button>
     <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
-	<center> Rev. 0.0.2rc </center>
+	
+</div>
+
+<div id="youtube" class="tabcontent">
+  <h1>Youtube-DL</h1>
+  <p>Downloader for Youtube</p> 
+</div>
+
+<div id="updates" class="tabcontent">
+  <h1>Updates</h1>
+  <p>What is new?</p>
+</div>
+
+
+<button class="tablink" onclick="openCity('downloader', this, 'red')" id="defaultOpen">Main Downloader</button>
+<button class="tablink" onclick="openCity('youtube', this, 'red')">YT-Downloader</button>
+<button class="tablink" onclick="openCity('updates', this, 'blue')">Updates</button>
+
+<script>
+function openCity(cityName,elmnt,color) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  document.getElementById(cityName).style.display = "block";
+  elmnt.style.backgroundColor = color;
+
+}
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+	
+	
 </body>
 </html>
