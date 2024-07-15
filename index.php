@@ -76,6 +76,6 @@
     <button onclick="stopDownload()">Stop</button>
     <button onclick="updateRepo()">Update</button>
     <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
-	<center> Rev. 0.0.1 </center>
+	<center> Rev. 0.0.2 </center>
 </body>
 </html>
