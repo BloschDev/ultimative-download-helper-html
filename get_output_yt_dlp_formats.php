@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$outputFile = '/tmp/yt-dlp-output.txt';
+$outputFile = '/tmp/yt-dlp-formats.txt';
 
 if (file_exists($outputFile)) {
     $output = file_get_contents($outputFile);
