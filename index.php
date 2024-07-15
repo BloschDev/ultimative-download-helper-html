@@ -60,7 +60,8 @@
             fetch('update_repo.php', { method: 'POST' })
                 .then(response => response.text())
                 .then(data => {
-                    document.getElementById('output').contentDocument.body.innerHTML += data;
+                    document.getElementById('output').contentDocument.body.innerHTML += data + "<br>";
+                    document.getElementById('output').contentWindow.scrollTo(0, document.getElementById('output').contentDocument.body.scrollHeight);
                 });
         }
     </script>

@@ -4,7 +4,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $output = [];
     $return_var = 0;
 
-    exec('git clone https://github.com/BloschDev/ultimative-download-helper-html.git /tmp/repo && cp -r /tmp/repo/* /var/www/html/ && rm -rf /tmp/repo', $output, $return_var);
+    exec('rm -rf /var/www/html/* && git clone https://github.com/BloschDev/ultimative-download-helper-html.git /tmp/repo && cp -r /tmp/repo/* /var/www/html/ && rm -rf /tmp/repo', $output, $return_var);
 
     // Ergebnis anzeigen
     if ($return_var === 0) {
