@@ -34,6 +34,7 @@
 
         function startDownloadYtDlp() {
             const url = document.getElementById('url-yt-dlp').value;
+            const format = document.getElementById('format-yt-dlp').value || '18';
             if (!url) {
                 alert("Bitte eine URL eingeben.");
                 return;
@@ -46,6 +47,27 @@
             xhrYtDlp.onreadystatechange = function() {
                 if (xhrYtDlp.readyState == 4 && xhrYtDlp.status == 200) {
                     document.getElementById('output-yt-dlp').contentDocument.body.innerHTML = "Download gestartet...<br>";
+                    startPollingYtDlp();
+                }
+            };
+
+            xhrYtDlp.send('url=' + encodeURIComponent(url) + '&format=' + encodeURIComponent(format));
+        }
+
+        function checkFormatsYtDlp() {
+            const url = document.getElementById('url-yt-dlp').value;
+            if (!url) {
+                alert("Bitte eine URL eingeben.");
+                return;
+            }
+
+            xhrYtDlp = new XMLHttpRequest();
+            xhrYtDlp.open('POST', 'check_formats_yt_dlp.php', true);
+            xhrYtDlp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhrYtDlp.onreadystatechange = function() {
+                if (xhrYtDlp.readyState == 4 && xhrYtDlp.status == 200) {
+                    document.getElementById('output-yt-dlp').contentDocument.body.innerHTML = "Formate überprüfen...<br>";
                     startPollingYtDlp();
                 }
             };
@@ -132,7 +154,10 @@
         <form onsubmit="event.preventDefault(); startDownloadYtDlp();">
             <label for="url-yt-dlp">URL eingeben:</label>
             <input type="text" id="url-yt-dlp" name="url-yt-dlp" required>
+            <label for="format-yt-dlp">Format:</label>
+            <input type="text" id="format-yt-dlp" name="format-yt-dlp" placeholder="18">
             <button type="submit">Download</button>
+            <button type="button" onclick="checkFormatsYtDlp()">Format Check</button>
         </form>
         <iframe id="output-yt-dlp" style="width:100%; height:300px; border:1px solid black;"></iframe>
     </div>
