@@ -150,6 +150,11 @@ body {font-family: Arial;}
 <div id="UPDATES" class="tabcontent">
   <h3>Updates</h3>
   <p>What is new?</p>
+  <br>
+  <br>
+  <p> <b> Rev. 0.0.3a</b>
+  <p> This is the Alpha Version of my awesome Download GUI.
+  <p>Yes, why a download helper? I'm tired of entering everything via the console, and there are no good interfaces or web GUIs for YT-DL or Gallery-DL anymore, or they are no longer being developed. That's why I created this project as an all-in-one package.
 </div>
 
 
