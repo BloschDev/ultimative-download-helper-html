@@ -1,57 +1,73 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
-    <title>UDH by Blosch</title>
-<style>
-* {box-sizing: border-box}
+    <meta charset="UTF-8">
+    <title>Gallery DL</title>
+    <script>
+        let xhr;
+        let polling;
 
-/* Set height of body and the document to 100% */
-body, html {
-  height: 100%;
-  margin: 0;
-  font-family: Arial;
-}
+        function startDownload() {
+            const url = document.getElementById('url').value;
+            if (!url) {
+                alert("Bitte eine URL eingeben.");
+                return;
+            }
 
-/* Style tab links */
-.tablink {
-  background-color: #555;
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 25%;
-}
+            // Start the download process
+            xhr = new XMLHttpRequest();
+            xhr.open('POST', 'start_download.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 
-.tablink:hover {
-  background-color: #777;
-}
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('output').contentDocument.body.innerHTML = "Download gestartet...<br>";
+                    startPolling();
+                }
+            };
 
-/* Style the tab content (and add height:100% for full page content) */
-.tabcontent {
-  color: white;
-  display: none;
-  padding: 100px 20px;
-  height: 100%;
-}
+            xhr.send('url=' + encodeURIComponent(url));
+        }
 
-#Home {background-color: white;}
-#News {background-color: white;}
-#Contact {background-color: white;}
+        function stopDownload() {
+            if (xhr) {
+                xhr.abort();
+                stopPolling();
+                document.getElementById('output').contentDocument.body.innerHTML += "Download gestoppt.<br>";
+                fetch('stop.php', { method: 'POST' });
+            }
+        }
 
-</style>
+        function startPolling() {
+            polling = setInterval(() => {
+                fetch('get_output.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim().length > 0) {
+                            const outputIframe = document.getElementById('output');
+                            outputIframe.contentDocument.body.innerHTML += data;
+                            outputIframe.contentWindow.scrollTo(0, outputIframe.contentDocument.body.scrollHeight);
+                        }
+                    });
+            }, 1000);
+        }
+
+        function stopPolling() {
+            clearInterval(polling);
+        }
+
+        function updateRepo() {
+            fetch('update_repo.php', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').contentDocument.body.innerHTML += data + "<br>";
+                    document.getElementById('output').contentWindow.scrollTo(0, document.getElementById('output').contentDocument.body.scrollHeight);
+                });
+        }
+    </script>
 </head>
 <body>
-
-<button class="tablink" onclick="openPage('Home', this, 'green')">Home</button>
-<button class="tablink" onclick="openPage('News', this, 'blue')" id="defaultOpen">News</button>
-<button class="tablink" onclick="openPage('Contact', this, 'red')">Contact</button>
-
-<div id="Home" class="tabcontent">
- <h1>Gallery DL Downloader</h1>
+    <h1>Gallery DL Downloader</h1>
     <form onsubmit="event.preventDefault(); startDownload();">
         <label for="url">URL eingeben:</label>
         <input type="text" id="url" name="url" required>
@@ -60,39 +76,5 @@ body, html {
     <button onclick="stopDownload()">Stop</button>
     <button onclick="updateRepo()">Update</button>
     <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe>
-</div>
-
-
-
-<div id="Contact" class="tabcontent">
-  <h3>YT-Downloader</h3>
-  <p>WIP - Another Update</p>
-</div>
-<div id="News" class="tabcontent">
-  <h3>Updates</h3>
-  <p>Some news this fine day!</p> 
-</div>
-
-
-<script>
-function openPage(pageName,elmnt,color) {
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablink");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].style.backgroundColor = "";
-  }
-  document.getElementById(pageName).style.display = "block";
-  elmnt.style.backgroundColor = color;
-}
-
-// Get the element with id="defaultOpen" and click on it
-document.getElementById("defaultOpen").click();
-</script>
-	
-	
 </body>
 </html>
