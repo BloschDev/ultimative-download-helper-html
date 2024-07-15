@@ -2,7 +2,7 @@
 session_start();
 
 $url = $_GET['url'];
-$cmd = "youtube-dl -P /data/vdl " . escapeshellarg($url) . " 2>&1";
+$cmd = "yt-dlp -o /data/vdl " . escapeshellarg($url) . " 2>&1";
 
 // Start the process
 $descriptorspec = array(
