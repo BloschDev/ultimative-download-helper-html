@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Gallery DL</title>
+    <title>UDH by Blosch</title>
     <script>
         let xhr;
         let polling;
