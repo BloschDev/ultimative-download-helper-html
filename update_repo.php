@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Ergebnis anzeigen
         if ($return_var === 0) {
-            echo "Update erfolgreich:<br>" . implode("<br>", $output);
+            echo "Update Done:<br>" . implode("<br>", $output);
         } else {
-            echo "Fehler beim Update:<br>" . implode("<br>", $output);
+            echo "Update Error:<br>" . implode("<br>", $output);
         }
     } else {
         echo "Das Skript $deploy_script existiert nicht oder ist nicht ausführbar.";
