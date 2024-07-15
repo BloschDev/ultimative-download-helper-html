@@ -1,17 +1,3 @@
-<h1>Downloader for Any</h1>
-  <p>Gallery-DL </p>
-  <h1>Ultimative Download Helper</h1>
-    <form onsubmit="event.preventDefault(); startDownload();">
-        <label for="url">Enter a URL:</label>
-        <input type="text" id="url" name="url" required>
-        <button type="submit">Download</button>
-    </form>
-    <button onclick="stopDownload()">Stop</button>
-    <button onclick="updateRepo()">Update</button>
-    <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
-
-
-
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -52,10 +38,10 @@ body, html {
   height: 100%;
 }
 
-#Home {background-color: red;}
-#News {background-color: green;}
-#Contact {background-color: blue;}
-#About {background-color: orange;}
+#Home {background-color: white;}
+#News {background-color: white;}
+#Contact {background-color: white;}
+
 </style>
 </head>
 <body>
