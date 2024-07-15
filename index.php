@@ -1,75 +1,33 @@
+<h1>Downloader for Any</h1>
+  <p>Gallery-DL </p>
+  <h1>Ultimative Download Helper</h1>
+    <form onsubmit="event.preventDefault(); startDownload();">
+        <label for="url">Enter a URL:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Download</button>
+    </form>
+    <button onclick="stopDownload()">Stop</button>
+    <button onclick="updateRepo()">Update</button>
+    <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
+
+
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
     <title>UDH by Blosch</title>
-    <script>
-        let xhr;
-        let polling;
+<style>
+* {box-sizing: border-box}
 
-        function startDownload() {
-            const url = document.getElementById('url').value;
-            if (!url) {
-                alert("Bitte eine URL eingeben.");
-                return;
-            }
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
 
-            // Start the download process
-            xhr = new XMLHttpRequest();
-            xhr.open('POST', 'start_download.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState == 4 && xhr.status == 200) {
-                    document.getElementById('output').contentDocument.body.innerHTML = "Download gestartet...<br>";
-                    startPolling();
-                }
-            };
-
-            xhr.send('url=' + encodeURIComponent(url));
-        }
-
-        function stopDownload() {
-            if (xhr) {
-                xhr.abort();
-                stopPolling();
-                document.getElementById('output').contentDocument.body.innerHTML += "Download gestoppt.<br>";
-                fetch('stop.php', { method: 'POST' });
-            }
-        }
-
-        function startPolling() {
-            polling = setInterval(() => {
-                fetch('get_output.php')
-                    .then(response => response.text())
-                    .then(data => {
-                        if (data.trim().length > 0) {
-                            const outputIframe = document.getElementById('output');
-                            outputIframe.contentDocument.body.innerHTML += data;
-                            outputIframe.contentWindow.scrollTo(0, outputIframe.contentDocument.body.scrollHeight);
-                        }
-                    });
-            }, 1000);
-        }
-
-        function stopPolling() {
-            clearInterval(polling);
-        }
-
-        function updateRepo() {
-            fetch('update_repo.php', { method: 'POST' })
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('output').contentDocument.body.innerHTML += data + "<br>";
-                    document.getElementById('output').contentWindow.scrollTo(0, document.getElementById('output').contentDocument.body.scrollHeight);
-                });
-        }
-    </script>
-</head>
-<body>	
-	<style>
-body {font-family: "Lato", sans-serif;}
-
+/* Style tab links */
 .tablink {
   background-color: #555;
   color: white;
@@ -86,24 +44,28 @@ body {font-family: "Lato", sans-serif;}
   background-color: #777;
 }
 
-/* Style the tab content */
+/* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
   color: white;
   display: none;
-  padding: 50px;
-  text-align: center;
+  padding: 100px 20px;
+  height: 100%;
 }
 
-#London {background-color:red;}
-#Paris {background-color:green;}
-#Tokyo {background-color:blue;}
-#Oslo {background-color:orange;}
+#Home {background-color: red;}
+#News {background-color: green;}
+#Contact {background-color: blue;}
+#About {background-color: orange;}
 </style>
 </head>
 <body>
-<center>Rev. 0.0.3a</center>
-<div id="downloader" class="tabcontent">
-  <h1>Downloader for Any</h1>
+
+<button class="tablink" onclick="openPage('Home', this, 'green')">Home</button>
+<button class="tablink" onclick="openPage('News', this, 'blue')" id="defaultOpen">News</button>
+<button class="tablink" onclick="openPage('Contact', this, 'red')">Contact</button>
+
+<div id="Home" class="tabcontent">
+  <h3>Main Downloader</h3>
   <p>Gallery-DL </p>
   <h1>Ultimative Download Helper</h1>
     <form onsubmit="event.preventDefault(); startDownload();">
@@ -114,26 +76,22 @@ body {font-family: "Lato", sans-serif;}
     <button onclick="stopDownload()">Stop</button>
     <button onclick="updateRepo()">Update</button>
     <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe><br>
-	
-</div>
-
-<div id="youtube" class="tabcontent">
-  <h1>Youtube-DL</h1>
-  <p>Downloader for Youtube</p> 
-</div>
-
-<div id="updates" class="tabcontent">
-  <h1>Updates</h1>
-  <p>What is new?</p>
 </div>
 
 
-<button class="tablink" onclick="openCity('downloader', this, 'red')" id="defaultOpen">Main Downloader</button>
-<button class="tablink" onclick="openCity('youtube', this, 'red')">YT-Downloader</button>
-<button class="tablink" onclick="openCity('updates', this, 'blue')">Updates</button>
+
+<div id="Contact" class="tabcontent">
+  <h3>YT-Downloader</h3>
+  <p>WIP - Another Update</p>
+</div>
+<div id="News" class="tabcontent">
+  <h3>Updates</h3>
+  <p>Some news this fine day!</p> 
+</div>
+
 
 <script>
-function openCity(cityName,elmnt,color) {
+function openPage(pageName,elmnt,color) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -143,10 +101,10 @@ function openCity(cityName,elmnt,color) {
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].style.backgroundColor = "";
   }
-  document.getElementById(cityName).style.display = "block";
+  document.getElementById(pageName).style.display = "block";
   elmnt.style.backgroundColor = color;
-
 }
+
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 </script>
