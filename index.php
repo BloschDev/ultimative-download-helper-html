@@ -68,7 +68,7 @@
             xhrYtDlp.onreadystatechange = function() {
                 if (xhrYtDlp.readyState == 4 && xhrYtDlp.status == 200) {
                     document.getElementById('output-yt-dlp').contentDocument.body.innerHTML = "Formate überprüfen...<br>";
-                    startPollingYtDlp();
+                    startPollingYtDlpFormats();
                 }
             };
 
@@ -92,6 +92,20 @@
         function startPollingYtDlp() {
             pollingYtDlp = setInterval(() => {
                 fetch('get_output_yt_dlp.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim().length > 0) {
+                            const outputIframe = document.getElementById('output-yt-dlp');
+                            outputIframe.contentDocument.body.innerHTML += data;
+                            outputIframe.contentWindow.scrollTo(0, outputIframe.contentDocument.body.scrollHeight);
+                        }
+                    });
+            }, 1000);
+        }
+
+        function startPollingYtDlpFormats() {
+            pollingYtDlp = setInterval(() => {
+                fetch('get_output_formats_yt_dlp.php')
                     .then(response => response.text())
                     .then(data => {
                         if (data.trim().length > 0) {
