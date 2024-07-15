@@ -165,6 +165,7 @@
 
     <div>
         <h2>YoutubeDL</h2>
+		<p>Formats: 397 (480pAV),398 (720pAV),399 ((1080pAV) </p>
         <form onsubmit="event.preventDefault(); startDownloadYtDlp();">
             <label for="url-yt-dlp">URL eingeben:</label>
             <input type="text" id="url-yt-dlp" name="url-yt-dlp" required>
