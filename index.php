@@ -6,8 +6,10 @@
     <script>
         let xhrGalleryDl;
         let xhrYtDlp;
+        let xhrDeploy;
         let pollingGalleryDl;
         let pollingYtDlp;
+        let pollingDeploy;
 
         function startDownloadGalleryDl() {
             const url = document.getElementById('url-gallery-dl').value;
@@ -79,6 +81,35 @@
             }, 1000);
         }
 
+        function startDeploy() {
+            xhrDeploy = new XMLHttpRequest();
+            xhrDeploy.open('POST', 'deploy.php', true);
+            xhrDeploy.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            xhrDeploy.onreadystatechange = function() {
+                if (xhrDeploy.readyState == 4 && xhrDeploy.status == 200) {
+                    document.getElementById('output-deploy').contentDocument.body.innerHTML = "Deploy gestartet...<br>";
+                    startPollingDeploy();
+                }
+            };
+
+            xhrDeploy.send();
+        }
+
+        function startPollingDeploy() {
+            pollingDeploy = setInterval(() => {
+                fetch('get_output_deploy.php')
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim().length > 0) {
+                            const outputIframe = document.getElementById('output-deploy');
+                            outputIframe.contentDocument.body.innerHTML += data;
+                            outputIframe.contentWindow.scrollTo(0, outputIframe.contentDocument.body.scrollHeight);
+                        }
+                    });
+            }, 1000);
+        }
+
         function stopPolling(polling) {
             clearInterval(polling);
         }
@@ -104,6 +135,12 @@
             <button type="submit">Download</button>
         </form>
         <iframe id="output-yt-dlp" style="width:100%; height:300px; border:1px solid black;"></iframe>
+    </div>
+
+    <div>
+        <h2>Deploy</h2>
+        <button onclick="startDeploy()">Deploy</button>
+        <iframe id="output-deploy" style="width:100%; height:300px; border:1px solid black;"></iframe>
     </div>
 </body>
 </html>
