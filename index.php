@@ -67,7 +67,7 @@
     </script>
 </head>
 <body>
-    <h1>Gallery DL Downloader</h1>
+    <h1>Ultimative Download Helper</h1>
     <form onsubmit="event.preventDefault(); startDownload();">
         <label for="url">Enter a URL:</label>
         <input type="text" id="url" name="url" required>
