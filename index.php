@@ -55,6 +55,14 @@
         function stopPolling() {
             clearInterval(polling);
         }
+
+        function updateRepo() {
+            fetch('update_repo.php', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').contentDocument.body.innerHTML += data;
+                });
+        }
     </script>
 </head>
 <body>
@@ -65,6 +73,7 @@
         <button type="submit">Download</button>
     </form>
     <button onclick="stopDownload()">Stop</button>
+    <button onclick="updateRepo()">Update</button>
     <iframe id="output" style="width:100%; height:300px; border:1px solid black;"></iframe>
 </body>
 </html>
