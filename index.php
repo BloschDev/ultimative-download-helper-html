@@ -165,12 +165,12 @@
 
     <div>
         <h2>YoutubeDL</h2>
-		<p>Formats: 397 (480pAV),398 (720pAV),399 ((1080pAV) </p>
+		<p>Formats: Please use "format Check" for availeble Formats! </p>
         <form onsubmit="event.preventDefault(); startDownloadYtDlp();">
             <label for="url-yt-dlp">URL eingeben:</label>
             <input type="text" id="url-yt-dlp" name="url-yt-dlp" required>
             <label for="format-yt-dlp">Format:</label>
-            <input type="text" id="format-yt-dlp" name="format-yt-dlp" placeholder="18">
+            <input type="text" id="format-yt-dlp" name="format-yt-dlp" placeholder="0">
             <button type="submit">Download</button>
             <button type="button" onclick="checkFormatsYtDlp()">Format Check</button>
         </form>
