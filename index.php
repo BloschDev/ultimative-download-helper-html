@@ -165,7 +165,7 @@
 
     <div>
         <h2>YoutubeDL</h2>
-		<p>Formats: Please use "format Check" for availeble Formats! </p>
+		<p>Formats: Please use "format Check" for all Formats! </p>
         <form onsubmit="event.preventDefault(); startDownloadYtDlp();">
             <label for="url-yt-dlp">URL eingeben:</label>
             <input type="text" id="url-yt-dlp" name="url-yt-dlp" required>
