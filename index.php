@@ -179,8 +179,8 @@
 
     <div>
         <h2>Deploy</h2>
-        <button onclick="startDeploy()">Deploy</button>
-        <iframe id="output-deploy" style="width:100%; height:300px; border:1px solid black;"></iframe>
+        <button onclick="startDeploy()">Updating HTML Mask</button>
+        <iframe id="output-deploy" style="width:100%; height:100px; border:1px solid black;"></iframe>
     </div>
 </body>
 </html>
