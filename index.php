@@ -180,7 +180,7 @@
     <div>
         <h2>Updater</h2>
         <button onclick="startDeploy()">Updating HTML Mask</button>
-        <iframe id="output-deploy" style="width:25%; height:50px; border:1px solid black;"></iframe>
+        <iframe id="output-deploy" style="width:15%; height:50px; border:1px solid black;"></iframe>
     </div>
 </body>
 </html>
